@@ -879,7 +879,8 @@ void TabWidget::wheelEvent(QWheelEvent *event)
 }
 #endif
 
-void TabWidget::retranslate() {
+void TabWidget::retranslate()
+{
     m_nextTabAction->setText(tr("Show Next Tab"));
     QList<QKeySequence> shortcuts;
     shortcuts.append(QKeySequence(Qt::CTRL | Qt::Key_BraceRight));
@@ -900,6 +901,7 @@ void TabWidget::retranslate() {
     m_newTabAction->setText(tr("New &Tab"));
     m_closeTabAction->setText(tr("&Close Tab"));
     m_bookmarkTabsAction->setText(tr("Bookmark All Tabs"));
+    m_tabBar->updateViewToolBarAction();
 }
 
 void TabWidget::changeEvent(QEvent *event)
@@ -916,10 +918,12 @@ void TabWidget::changeEvent(QEvent *event)
  */
 void TabWidget::loadString(const QString &string, OpenUrlIn tab)
 {
-    if (string.isEmpty())
+    QString urlString = string.trimmed();
+
+    if (urlString.isEmpty())
         return;
 
-    QUrl url = guessUrlFromString(string);
+    QUrl url = guessUrlFromString(urlString);
     currentLineEdit()->setText(QString::fromUtf8(url.toEncoded()));
     loadUrl(url, tab);
 }
