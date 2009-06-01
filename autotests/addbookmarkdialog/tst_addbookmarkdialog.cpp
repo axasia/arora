@@ -19,9 +19,12 @@
 
 #include <QtTest/QtTest>
 
-#include <bookmarks.h>
-#include <xbel.h>
-#include <browserapplication.h>
+#include "addbookmarkdialog.h"
+#include "bookmarksmanager.h"
+#include "bookmarknode.h"
+#include "browserapplication.h"
+
+#include <qpushbutton.h>
 
 class tst_AddBookmarkDialog : public QObject
 {
@@ -138,6 +141,8 @@ void tst_AddBookmarkDialog::addbookmarkdialog()
     if (node) {
         QCOMPARE(node->title, title);
         QCOMPARE(node->url, url);
+        QVERIFY(dialog.addedNode());
+        QVERIFY(*node == *dialog.addedNode());
     }
 }
 

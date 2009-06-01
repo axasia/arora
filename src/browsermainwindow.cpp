@@ -65,8 +65,13 @@
 #include "browsermainwindow.h"
 
 #include "aboutdialog.h"
+#include "addbookmarkdialog.h"
 #include "autosaver.h"
-#include "bookmarks.h"
+#include "bookmarksdialog.h"
+#include "bookmarksmanager.h"
+#include "bookmarksmenu.h"
+#include "bookmarksmodel.h"
+#include "bookmarkstoolbar.h"
 #include "browserapplication.h"
 #include "clearprivatedata.h"
 #include "downloadmanager.h"
@@ -917,7 +922,7 @@ void BrowserMainWindow::addBookmark()
 
 void BrowserMainWindow::addBookmarkFolder()
 {
-    AddBookmarkDialog dialog(this);
+    AddBookmarkDialog dialog;
     BookmarksManager *bookmarksManager = BrowserApplication::bookmarksManager();
     BookmarkNode *menu = bookmarksManager->menu();
     QModelIndex index = bookmarksManager->bookmarksModel()->index(menu);
