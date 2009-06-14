@@ -99,7 +99,7 @@ BrowserApplication::BrowserApplication(int &argc, char **argv)
     QString gitVersion = QLatin1String(GITCHANGENUMBER);
     if (gitVersion != QLatin1String("0")
         && !gitVersion.isEmpty())
-        version += QString(tr(" (Change: %1 %2)"))
+        version += QString(QLatin1String(" (git: %1 %2)"))
                     .arg(QLatin1String(GITCHANGENUMBER))
                     .arg(QLatin1String(GITVERSION));
 
@@ -314,6 +314,18 @@ QList<BrowserMainWindow*> BrowserApplication::mainWindows()
     return list;
 }
 
+bool BrowserApplication::allowToCloseWindow(BrowserMainWindow *window)
+{
+    Q_UNUSED(window)
+    if (mainWindows().count() > 1)
+        return true;
+
+    if (s_downloadManager)
+        return downloadManager()->allowQuit();
+
+    return true;
+}
+
 void BrowserApplication::clean()
 {
     // cleanup any deleted main windows first
@@ -523,7 +535,7 @@ QIcon BrowserApplication::icon(const QUrl &url)
     if (icon.isNull()) {
         QPixmap pixmap = QWebSettings::webGraphic(QWebSettings::DefaultFrameIconGraphic);
         if (pixmap.isNull()) {
-            pixmap = QPixmap(QLatin1String(":defaulticon.png"));
+            pixmap = QPixmap(QLatin1String(":graphics/defaulticon.png"));
             QWebSettings::setWebGraphic(QWebSettings::DefaultFrameIconGraphic, pixmap);
         }
         return pixmap;

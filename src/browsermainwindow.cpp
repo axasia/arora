@@ -94,6 +94,7 @@
 #include <qprintpreviewdialog.h>
 #include <qprinter.h>
 #include <qsettings.h>
+#include <qtextcodec.h>
 #include <qmenubar.h>
 #include <qmessagebox.h>
 #include <qstatusbar.h>
@@ -508,7 +509,11 @@ void BrowserMainWindow::setupMenu()
     m_fileMenu->addAction(m_fileCloseWindow);
 
     m_fileQuit = new QAction(m_fileMenu);
-    connect(m_fileQuit, SIGNAL(triggered()), BrowserApplication::instance(), SLOT(quitBrowser()));
+    int kdeSessionVersion = QString::fromLocal8Bit(qgetenv("KDE_SESSION_VERSION")).toInt();
+    if (kdeSessionVersion != 0)
+        connect(m_fileQuit, SIGNAL(triggered()), this, SLOT(close()));
+    else
+        connect(m_fileQuit, SIGNAL(triggered()), BrowserApplication::instance(), SLOT(quitBrowser()));
     m_fileQuit->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Q));
     m_fileMenu->addAction(m_fileQuit);
 
@@ -640,6 +645,14 @@ void BrowserMainWindow::setupMenu()
     m_viewMenu->addAction(m_viewZoomTextOnlyAction);
 #endif
 
+    m_viewFullScreenAction = new QAction(m_viewMenu);
+    m_viewFullScreenAction->setShortcut(Qt::Key_F11);
+    connect(m_viewFullScreenAction, SIGNAL(triggered(bool)),
+            this, SLOT(viewFullScreen(bool)));
+    m_viewFullScreenAction->setCheckable(true);
+    m_viewMenu->addAction(m_viewFullScreenAction);
+
+
     m_viewMenu->addSeparator();
 
     m_viewSourceAction = new QAction(m_viewMenu);
@@ -647,12 +660,18 @@ void BrowserMainWindow::setupMenu()
             this, SLOT(viewPageSource()));
     m_viewMenu->addAction(m_viewSourceAction);
 
-    m_viewFullScreenAction = new QAction(m_viewMenu);
-    m_viewFullScreenAction->setShortcut(Qt::Key_F11);
-    connect(m_viewFullScreenAction, SIGNAL(triggered(bool)),
-            this, SLOT(viewFullScreen(bool)));
-    m_viewFullScreenAction->setCheckable(true);
-    m_viewMenu->addAction(m_viewFullScreenAction);
+#if WEBKIT_TRUNK
+    m_viewMenu->addSeparator();
+
+    m_viewTextEncodingAction = new QAction(m_viewMenu);
+    m_viewMenu->addAction(m_viewTextEncodingAction);
+    m_viewTextEncodingMenu = new QMenu(m_viewMenu);
+    m_viewTextEncodingAction->setMenu(m_viewTextEncodingMenu);
+    connect(m_viewTextEncodingMenu, SIGNAL(aboutToShow()),
+            this, SLOT(aboutToShowTextEncodingMenu()));
+    connect(m_viewTextEncodingMenu, SIGNAL(triggered(QAction *)),
+            this, SLOT(viewTextEncoding(QAction *)));
+#endif
 
     // History
     m_historyMenu = new HistoryMenu(this);
@@ -774,6 +793,46 @@ void BrowserMainWindow::setupMenu()
     m_helpMenu->addAction(m_helpAboutApplicationAction);
 }
 
+
+void BrowserMainWindow::aboutToShowTextEncodingMenu()
+{
+#if WEBKIT_TRUNK
+    m_viewTextEncodingMenu->clear();
+    int currentCodec = -1;
+    QList<QByteArray> codecs = QTextCodec::availableCodecs();
+    QByteArray defaultTextEncoding = QWebSettings::globalSettings()->defaultTextEncoding().toUtf8();
+    currentCodec = codecs.indexOf(defaultTextEncoding);
+    QAction *defaultEncoding = m_viewTextEncodingMenu->addAction(tr("Default"));
+    defaultEncoding->setData(-1);
+    defaultEncoding->setCheckable(true);
+    if (currentCodec == -1)
+        defaultEncoding->setChecked(true);
+    m_viewTextEncodingMenu->addSeparator();
+    for (int i = 0; i < codecs.count(); ++i) {
+        const QByteArray &codec = codecs.at(i);
+        QAction *action = m_viewTextEncodingMenu->addAction(QLatin1String(codec));
+        action->setData(i);
+        action->setCheckable(true);
+        if (currentCodec == i)
+            action->setChecked(true);
+    }
+#endif
+}
+
+void BrowserMainWindow::viewTextEncoding(QAction *action)
+{
+    Q_UNUSED(action);
+#if WEBKIT_TRUNK
+    Q_ASSERT(action);
+    QList<QByteArray> codecs = QTextCodec::availableCodecs();
+    int offset = action->data().toInt();
+    if (offset < 0 || offset >= codecs.count())
+        QWebSettings::globalSettings()->setDefaultTextEncoding(QString());
+    else
+        QWebSettings::globalSettings()->setDefaultTextEncoding(QLatin1String(codecs[offset]));
+#endif
+}
+
 void BrowserMainWindow::retranslate()
 {
     m_fileMenu->setTitle(tr("&File"));
@@ -815,6 +874,9 @@ void BrowserMainWindow::retranslate()
     m_viewSourceAction->setText(tr("Page S&ource"));
     m_viewSourceAction->setShortcut(tr("Ctrl+Alt+U"));
     m_viewFullScreenAction->setText(tr("&Full Screen"));
+#if WEBKIT_TRUNK
+    m_viewTextEncodingAction->setText(tr("Text Encoding"));
+#endif
 
     m_historyMenu->setTitle(tr("Hi&story"));
     m_historyBackAction->setText(tr("Back"));
@@ -900,6 +962,7 @@ void BrowserMainWindow::setupToolBar()
 void BrowserMainWindow::showBookmarksDialog()
 {
     BookmarksDialog *dialog = new BookmarksDialog(this);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
     connect(dialog, SIGNAL(openUrl(const QUrl&, TabWidget::OpenUrlIn, const QString &)),
             m_tabWidget, SLOT(loadUrl(const QUrl&, TabWidget::OpenUrlIn, const QString &)));
     dialog->show();
@@ -1046,6 +1109,7 @@ void BrowserMainWindow::updateWindowTitle(const QString &title)
 void BrowserMainWindow::aboutApplication()
 {
     AboutDialog *aboutDialog = new AboutDialog(this);
+    aboutDialog->setAttribute(Qt::WA_DeleteOnClose);
     aboutDialog->show();
 }
 
@@ -1070,10 +1134,10 @@ void BrowserMainWindow::filePrintPreview()
 {
     if (!currentTab())
         return;
-    QPrintPreviewDialog *dialog = new QPrintPreviewDialog(this);
-    connect(dialog, SIGNAL(paintRequested(QPrinter *)),
+    QPrintPreviewDialog dialog(this);
+    connect(&dialog, SIGNAL(paintRequested(QPrinter *)),
             currentTab(), SLOT(print(QPrinter *)));
-    dialog->exec();
+    dialog.exec();
 }
 
 void BrowserMainWindow::filePrint()
@@ -1086,9 +1150,9 @@ void BrowserMainWindow::filePrint()
 void BrowserMainWindow::printRequested(QWebFrame *frame)
 {
     QPrinter printer;
-    QPrintDialog *dialog = new QPrintDialog(&printer, this);
-    dialog->setWindowTitle(tr("Print Document"));
-    if (dialog->exec() != QDialog::Accepted)
+    QPrintDialog dialog(&printer, this);
+    dialog.setWindowTitle(tr("Print Document"));
+    if (dialog.exec() != QDialog::Accepted)
         return;
     frame->print(&printer);
 }
@@ -1134,7 +1198,7 @@ void BrowserMainWindow::privacyChanged(bool isPrivate)
 
 void BrowserMainWindow::closeEvent(QCloseEvent *event)
 {
-    if (!BrowserApplication::instance()->downloadManager()->allowQuit()) {
+    if (!BrowserApplication::instance()->allowToCloseWindow(this)) {
         event->ignore();
         return;
     }

@@ -1,5 +1,6 @@
 /*
  * Copyright 2009 Benjamin C. Meyer <ben@meyerhome.net>
+ * Copyright 2009 Jakub Wieczorek <faw217@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,10 +32,15 @@
 
 #include <qbuffer.h>
 #include <qdesktopservices.h>
+#include <qmessagebox.h>
 #include <qnetworkreply.h>
 #include <qnetworkrequest.h>
 #include <qsettings.h>
 #include <qwebframe.h>
+
+#ifdef WEBKIT_TRUNK
+#include <qwebelement.h>
+#endif
 
 WebPluginFactory *WebPage::s_webPluginFactory = 0;
 
@@ -74,6 +80,29 @@ QList<WebPageLinkedResource> WebPage::linkedResources(const QString &relation)
 {
     QList<WebPageLinkedResource> resources;
 
+#ifdef WEBKIT_TRUNK
+    QList<QWebElement> linkElements = mainFrame()->findAllElements(QLatin1String("html > head > link"));
+
+    foreach (const QWebElement &linkElement, linkElements) {
+        QString rel = linkElement.attribute(QLatin1String("rel"));
+        QString href = linkElement.attribute(QLatin1String("href"));
+        QString type = linkElement.attribute(QLatin1String("type"));
+        QString title = linkElement.attribute(QLatin1String("title"));
+
+        if (href.isEmpty() || type.isEmpty())
+            continue;
+        if (!relation.isEmpty() && rel != relation)
+            continue;
+
+        WebPageLinkedResource resource;
+        resource.rel = rel;
+        resource.type = type;
+        resource.href = href;
+        resource.title = title;
+
+        resources.append(resource);
+    }
+#else
     QFile file(QLatin1String(":fetchLinks.js"));
     if (!file.open(QFile::ReadOnly))
         return resources;
@@ -82,19 +111,25 @@ QList<WebPageLinkedResource> WebPage::linkedResources(const QString &relation)
     QVariantList list = mainFrame()->evaluateJavaScript(script).toList();
     foreach (const QVariant &variant, list) {
         QVariantMap map = variant.toMap();
-        const QString rel = map[QLatin1String("rel")].toString();
+        QString rel = map[QLatin1String("rel")].toString();
+        QString type = map[QLatin1String("type")].toString();
+        QString href = map[QLatin1String("href")].toString();
+        QString title = map[QLatin1String("title")].toString();
 
+        if (href.isEmpty() || type.isEmpty())
+            continue;
         if (!relation.isEmpty() && rel != relation)
             continue;
 
         WebPageLinkedResource resource;
         resource.rel = rel;
-        resource.type = map[QLatin1String("type")].toString();
-        resource.href = map[QLatin1String("href")].toString();
-        resource.title = map[QLatin1String("title")].toString();
+        resource.type = type;
+        resource.href = href;
+        resource.title = title;
 
         resources.append(resource);
     }
+#endif
 
     return resources;
 }
@@ -122,6 +157,15 @@ bool WebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &r
         || scheme == QLatin1String("ftp")) {
         QDesktopServices::openUrl(request.url());
         return false;
+    }
+
+    if (type == QWebPage::NavigationTypeFormResubmitted) {
+        QMessageBox::StandardButton button = QMessageBox::warning(view(), tr("Resending POST request"),
+                             tr("In order to display the site, the request along with all the data must be sent once again, "
+                                "which may lead to some unexpected behaviour of the site e.g. the same action might be "
+                                "performed once again. Do you want to continue anyway?"), QMessageBox::Yes | QMessageBox::No);
+        if (button != QMessageBox::Yes)
+            return false;
     }
 
     TabWidget::OpenUrlIn openIn = frame ? TabWidget::CurrentTab : TabWidget::NewWindow;
