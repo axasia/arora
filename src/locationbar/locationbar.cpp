@@ -120,9 +120,11 @@ void LocationBar::paintEvent(QPaintEvent *event)
     QStyleOptionFrameV2 panel;
     initStyleOption(&panel);
     QRect backgroundRect = style()->subElementRect(QStyle::SE_LineEditContents, &panel, this);
+#if QT_VERSION < 0x040500
     int left = textMargin(LineEdit::LeftSide);
     int right = textMargin(LineEdit::RightSide);
     backgroundRect.adjust(-left, 0, right, 0);
+#endif
     painter.setBrush(backgroundColor);
     painter.setPen(backgroundColor);
     painter.drawRect(backgroundRect);
@@ -169,4 +171,34 @@ void LocationBar::keyPressEvent(QKeyEvent *event)
     } else {
         QLineEdit::keyPressEvent(event);
     }
+}
+
+void LocationBar::dragEnterEvent(QDragEnterEvent *event)
+{
+    const QMimeData *mimeData = event->mimeData();
+    if (mimeData->hasUrls() || mimeData->hasText())
+        event->acceptProposedAction();
+
+    LineEdit::dragEnterEvent(event);
+}
+
+void LocationBar::dropEvent(QDropEvent *event)
+{
+    const QMimeData *mimeData = event->mimeData();
+
+    QUrl url;
+    if (mimeData->hasUrls())
+        url = mimeData->urls().at(0);
+    else if (mimeData->hasText())
+        url = QUrl::fromEncoded(mimeData->text().toUtf8(), QUrl::TolerantMode);
+
+    if (url.isEmpty() || !url.isValid()) {
+        LineEdit::dropEvent(event);
+        return;
+    }
+
+    setText(QString::fromUtf8(url.toEncoded()));
+    selectAll();
+
+    event->acceptProposedAction();
 }
