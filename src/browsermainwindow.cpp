@@ -78,7 +78,6 @@
 #include "history.h"
 #include "languagemanager.h"
 #include "networkaccessmanager.h"
-#include "networkmonitor.h"
 #include "settings.h"
 #include "sourceviewer.h"
 #include "tabbar.h"
@@ -660,7 +659,7 @@ void BrowserMainWindow::setupMenu()
             this, SLOT(viewPageSource()));
     m_viewMenu->addAction(m_viewSourceAction);
 
-#if WEBKIT_TRUNK
+#if QT_VERSION >= 0x040600 || defined(WEBKIT_TRUNK)
     m_viewMenu->addSeparator();
 
     m_viewTextEncodingAction = new QAction(m_viewMenu);
@@ -758,11 +757,6 @@ void BrowserMainWindow::setupMenu()
             this, SLOT(clearPrivateData()));
     m_toolsMenu->addAction(m_toolsClearPrivateDataAction);
 
-    m_toolsShowNetworkMonitor = new QAction(m_toolsMenu);
-    connect(m_toolsShowNetworkMonitor, SIGNAL(triggered()),
-            this, SLOT(showNetworkMonitor()));
-    m_toolsMenu->addAction(m_toolsShowNetworkMonitor);
-
     m_toolsEnableInspector = new QAction(m_toolsMenu);
     connect(m_toolsEnableInspector, SIGNAL(triggered(bool)),
             this, SLOT(toggleInspector(bool)));
@@ -796,9 +790,9 @@ void BrowserMainWindow::setupMenu()
 
 void BrowserMainWindow::aboutToShowTextEncodingMenu()
 {
-#if WEBKIT_TRUNK
+#if QT_VERSION >= 0x040600 || defined(WEBKIT_TRUNK)
     m_viewTextEncodingMenu->clear();
-    
+
     int currentCodec = -1;
     QStringList codecs;
     QList<int> mibs = QTextCodec::availableMibs();
@@ -807,7 +801,7 @@ void BrowserMainWindow::aboutToShowTextEncodingMenu()
         codecs.append(codec);
     }
     codecs.sort();
-    
+
     QString defaultTextEncoding = QWebSettings::globalSettings()->defaultTextEncoding();
     currentCodec = codecs.indexOf(defaultTextEncoding);
 
@@ -832,7 +826,7 @@ void BrowserMainWindow::aboutToShowTextEncodingMenu()
 void BrowserMainWindow::viewTextEncoding(QAction *action)
 {
     Q_UNUSED(action);
-#if WEBKIT_TRUNK
+#if QT_VERSION >= 0x040600 || defined(WEBKIT_TRUNK)
     Q_ASSERT(action);
     QList<QByteArray> codecs = QTextCodec::availableCodecs();
     int offset = action->data().toInt();
@@ -884,7 +878,7 @@ void BrowserMainWindow::retranslate()
     m_viewSourceAction->setText(tr("Page S&ource"));
     m_viewSourceAction->setShortcut(tr("Ctrl+Alt+U"));
     m_viewFullScreenAction->setText(tr("&Full Screen"));
-#if WEBKIT_TRUNK
+#if QT_VERSION >= 0x040600 || defined(WEBKIT_TRUNK)
     m_viewTextEncodingAction->setText(tr("Text Encoding"));
 #endif
 
@@ -906,7 +900,6 @@ void BrowserMainWindow::retranslate()
     m_toolsWebSearchAction->setShortcut(QKeySequence(tr("Ctrl+K", "Web Search")));
     m_toolsClearPrivateDataAction->setText(tr("&Clear Private Data"));
     m_toolsClearPrivateDataAction->setShortcut(QKeySequence(tr("Ctrl+Shift+Delete", "Clear Private Data")));
-    m_toolsShowNetworkMonitor->setText(tr("Show &Network Monitor"));
     m_toolsEnableInspector->setText(tr("Enable Web &Inspector"));
 
     m_helpMenu->setTitle(tr("&Help"));
@@ -1125,8 +1118,14 @@ void BrowserMainWindow::aboutApplication()
 
 void BrowserMainWindow::fileNew()
 {
-    BrowserMainWindow *mw = BrowserApplication::instance()->newMainWindow();
-    mw->goHome();
+    BrowserMainWindow *window = BrowserApplication::instance()->newMainWindow();
+
+    QSettings settings;
+    settings.beginGroup(QLatin1String("MainWindow"));
+    int startup = settings.value(QLatin1String("startupBehavior")).toInt();
+
+    if (startup == 0)
+        window->goHome();
 }
 
 void BrowserMainWindow::fileOpen()
@@ -1137,7 +1136,7 @@ void BrowserMainWindow::fileOpen()
     if (file.isEmpty())
         return;
 
-    tabWidget()->loadString(file);
+    tabWidget()->loadUrl(QUrl::fromLocalFile(file));
 }
 
 void BrowserMainWindow::filePrintPreview()
@@ -1177,7 +1176,8 @@ void BrowserMainWindow::privateBrowsing()
             "<li> Items are automatically removed from the Downloads window.</li>"
             "<li> New cookies are not stored, current cookies can't be accessed.</li>"
             "<li> Site icons won't be stored, session won't be saved.</li>"
-            "<li> Searches are not added to the pop-up menu in the search box.</li></ul>"
+            "<li> Searches are not added to the pop-up menu in the search box.</li>"
+            "<li> Network cache is disabled.</li></ul>"
             "Until you close the window, you can still click the Back and Forward buttons"
             " to return to the webpages you have opened.").arg(title);
 
@@ -1486,11 +1486,5 @@ void BrowserMainWindow::openActionUrl(QAction *action)
 void BrowserMainWindow::geometryChangeRequested(const QRect &geometry)
 {
     setGeometry(geometry);
-}
-
-void BrowserMainWindow::showNetworkMonitor()
-{
-    NetworkMonitor *monitor = NetworkMonitor::self();
-    monitor->show();
 }
 

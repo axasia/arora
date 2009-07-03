@@ -53,6 +53,7 @@ HEADERS += \
     modelmenu.h \
     networkaccessmanager.h \
     plaintexteditsearch.h \
+    schemeaccesshandler.h \
     searchbar.h \
     searchbutton.h \
     searchlineedit.h \
@@ -79,6 +80,7 @@ SOURCES += \
     modelmenu.cpp \
     networkaccessmanager.cpp \
     plaintexteditsearch.cpp \
+    schemeaccesshandler.cpp \
     searchbar.cpp \
     searchbutton.cpp \
     searchlineedit.cpp \
@@ -97,7 +99,6 @@ include(bookmarks/bookmarks.pri)
 include(cookiejar/cookiejar.pri)
 include(history/history.pri)
 include(locationbar/locationbar.pri)
-include(networkmonitor/networkmonitor.pri)
 include(opensearch/opensearch.pri)
 include(qwebplugins/qwebplugins.pri)
 include(utils/utils.pri)

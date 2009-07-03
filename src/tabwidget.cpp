@@ -70,8 +70,10 @@
 #include "browsermainwindow.h"
 #include "history.h"
 #include "historymanager.h"
-#include "tabbar.h"
 #include "locationbar.h"
+#include "opensearchengine.h"
+#include "opensearchmanager.h"
+#include "tabbar.h"
 #include "toolbarsearch.h"
 #include "webactionmapper.h"
 #include "webpage.h"
@@ -145,8 +147,8 @@ TabWidget::TabWidget(QWidget *parent)
     m_newTabAction->setIcon(QIcon(QLatin1String(":graphics/addtab.png")));
     m_newTabAction->setIconVisibleInMenu(false);
 
-#if QT_VERSION >= 0x040500
     QSettings settings;
+#if QT_VERSION >= 0x040500
     settings.beginGroup(QLatin1String("tabs"));
     bool oneCloseButton = settings.value(QLatin1String("oneCloseButton"), false).toBool();
     if (oneCloseButton) {
@@ -173,12 +175,13 @@ TabWidget::TabWidget(QWidget *parent)
     m_recentlyClosedTabsAction->setMenu(m_recentlyClosedTabsMenu);
     m_recentlyClosedTabsAction->setEnabled(false);
 
+    bool newTabButtonInRightCorner = settings.value(QLatin1String("newTabButtonInRightCorner"), true).toBool();
 #ifndef Q_WS_MAC // can't seem to figure out the background color :(
     QToolButton *addTabButton = new QToolButton(this);
     addTabButton->setDefaultAction(m_newTabAction);
     addTabButton->setAutoRaise(true);
     addTabButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    setCornerWidget(addTabButton, Qt::TopRightCorner);
+    setCornerWidget(addTabButton, newTabButtonInRightCorner ? Qt::TopRightCorner : Qt::TopLeftCorner);
 #endif
 
 #if QT_VERSION >= 0x040500
@@ -190,7 +193,7 @@ TabWidget::TabWidget(QWidget *parent)
         closeTabButton->setDefaultAction(m_closeTabAction);
         closeTabButton->setAutoRaise(true);
         closeTabButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
-        setCornerWidget(closeTabButton, Qt::TopLeftCorner);
+        setCornerWidget(closeTabButton, newTabButtonInRightCorner ? Qt::TopLeftCorner : Qt::TopRightCorner);
 #if QT_VERSION >= 0x040500
     } else {
         m_tabBar->setTabsClosable(true);
@@ -924,13 +927,24 @@ void TabWidget::loadString(const QString &string, OpenUrlIn tab)
 QUrl TabWidget::guessUrlFromString(const QString &string)
 {
     QUrl url = WebView::guessUrlFromString(string);
-    if (url.isValid())
+
+    // QUrl::isValid() is too much tolerant.
+    // We actually want to check if the url conforms to the RFC, which QUrl::isValid() doesn't state.
+    if (!url.scheme().isEmpty() && (!url.host().isEmpty() || !url.path().isEmpty()))
         return url;
 
-    // In the future we could do more fancy things such as automatically searching
-    // on the current search engine, looking through our history or something else.
-    QString urlString = QLatin1String("http://") + string;
-    return QUrl::fromEncoded(urlString.toUtf8(), QUrl::TolerantMode);
+    QSettings settings;
+    settings.beginGroup(QLatin1String("urlloading"));
+    bool search = settings.value(QLatin1String("searchEngineFallback"), false).toBool();
+
+    if (search) {
+        url = ToolbarSearch::openSearchManager()->currentEngine()->searchUrl(string.trimmed());
+    } else {
+        QString urlString = QLatin1String("http://") + string.trimmed();
+        url = QUrl::fromEncoded(urlString.toUtf8(), QUrl::TolerantMode);
+    }
+
+    return url;
 }
 
 /*
@@ -949,7 +963,7 @@ void TabWidget::loadSettings()
     for (int i = 0; i < count(); ++i) {
         WebView *v = webView(i);
         if (v && v->page())
-            v->webPage()->loadSettings();
+            v->loadSettings();
     }
 }
 

@@ -38,7 +38,7 @@
 #include <qsettings.h>
 #include <qwebframe.h>
 
-#ifdef WEBKIT_TRUNK
+#if QT_VERSION >= 0x040600 || defined(WEBKIT_TRUNK)
 #include <qwebelement.h>
 #endif
 
@@ -80,7 +80,10 @@ QList<WebPageLinkedResource> WebPage::linkedResources(const QString &relation)
 {
     QList<WebPageLinkedResource> resources;
 
-#ifdef WEBKIT_TRUNK
+    QString baseUrlString = mainFrame()->evaluateJavaScript(QLatin1String("document.baseURI")).toString();
+    QUrl baseUrl = QUrl::fromEncoded(baseUrlString.toUtf8());
+
+#if QT_VERSION >= 0x040600 || defined(WEBKIT_TRUNK)
     QList<QWebElement> linkElements = mainFrame()->findAllElements(QLatin1String("html > head > link"));
 
     foreach (const QWebElement &linkElement, linkElements) {
@@ -97,7 +100,7 @@ QList<WebPageLinkedResource> WebPage::linkedResources(const QString &relation)
         WebPageLinkedResource resource;
         resource.rel = rel;
         resource.type = type;
-        resource.href = href;
+        resource.href = baseUrl.resolved(QUrl::fromEncoded(href.toUtf8()));
         resource.title = title;
 
         resources.append(resource);
@@ -124,7 +127,7 @@ QList<WebPageLinkedResource> WebPage::linkedResources(const QString &relation)
         WebPageLinkedResource resource;
         resource.rel = rel;
         resource.type = type;
-        resource.href = href;
+        resource.href = baseUrl.resolved(QUrl::fromEncoded(href.toUtf8()));
         resource.title = title;
 
         resources.append(resource);
