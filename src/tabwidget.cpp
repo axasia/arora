@@ -69,6 +69,7 @@
 #include "browserapplication.h"
 #include "browsermainwindow.h"
 #include "history.h"
+#include "historycompleter.h"
 #include "historymanager.h"
 #include "locationbar.h"
 #include "opensearchengine.h"
@@ -437,7 +438,7 @@ WebView *TabWidget::makeNewTab(bool makeCurrent)
     if (!m_lineEditCompleter) {
         HistoryCompletionModel *completionModel = new HistoryCompletionModel(this);
         completionModel->setSourceModel(BrowserApplication::historyManager()->historyFilterModel());
-        m_lineEditCompleter = new QCompleter(completionModel, this);
+        m_lineEditCompleter = new HistoryCompleter(completionModel, this);
         connect(m_lineEditCompleter, SIGNAL(activated(const QString &)),
                 this, SLOT(loadString(const QString &)));
         // Should this be in Qt by default?
@@ -927,6 +928,10 @@ void TabWidget::loadString(const QString &string, OpenUrlIn tab)
 QUrl TabWidget::guessUrlFromString(const QString &string)
 {
     QUrl url = WebView::guessUrlFromString(string);
+
+    if (url.scheme() == QLatin1String("about")
+        && url.path() == QLatin1String("home"))
+        url = QUrl(QLatin1String("qrc:/startpage.html"));
 
     // QUrl::isValid() is too much tolerant.
     // We actually want to check if the url conforms to the RFC, which QUrl::isValid() doesn't state.
