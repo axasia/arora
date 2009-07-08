@@ -179,6 +179,19 @@ void DownloadItem::getFileName()
         }
     }
     m_output.setFileName(fileName);
+
+    // Check file path for saving.
+    QDir saveDirPath = QFileInfo(m_output.fileName()).dir();
+    if(!saveDirPath.exists()) {
+        if(!saveDirPath.mkpath(saveDirPath.absolutePath())) {
+            progressBar->setVisible(false);
+            stop();
+            downloadInfoLabel->setText(tr("Cannot download: download directory(%1) cannot create.")
+                    .arg(saveDirPath.absolutePath()));
+            return;
+        }
+    }
+
     fileNameLabel->setText(QFileInfo(m_output.fileName()).fileName());
     if (m_requestFileName)
         downloadReadyRead();
