@@ -75,7 +75,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Type a name for the bookmark, and choose where to keep it.</source>
-        <translation>Entrer un nom pour le marque-page et choisissez où le conserver.</translation>
+        <translation>Entrez un nom pour le marque-page et choisissez où le conserver.</translation>
     </message>
     <message>
         <source>Url</source>
@@ -151,7 +151,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>XBEL (*.xbel *.xml)</source>
-        <translation>XBEL (*.xbel *.xml)</translation>
+        <translation type="obsolete">XBEL (*.xbel *.xml)</translation>
     </message>
     <message>
         <source>Imported %1</source>
@@ -192,7 +192,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Error when loading html bookmarks: %1
 </source>
-        <translation>Erreur pendant le chargement des marque-pages html: %1
+        <translation type="obsolete">Erreur pendant le chargement des marque-pages html: %1
 </translation>
     </message>
     <message>
@@ -207,7 +207,33 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>XBEL</source>
-        <translation>XBEL</translation>
+        <translation type="obsolete">XBEL</translation>
+    </message>
+    <message>
+        <source>XBEL bookmarks</source>
+        <translation>Marque-pages XBEL</translation>
+    </message>
+    <message>
+        <source>HTML Netscape bookmarks</source>
+        <translation>Marque-pages HTML Netscape</translation>
+    </message>
+    <message>
+        <source>htmlToXBel tool required</source>
+        <translation>L&apos;outil htmlToXBel est requis</translation>
+    </message>
+    <message>
+        <source>htmlToXBel tool, which is shipped with Arora and is needed to import HTML bookmarks, is not installed or not available in the search paths.</source>
+        <translation>L&apos;outil htmlToXBel, fourni avec Arora et nécessaire à l&apos;importation de marque-pages HTML, n&apos;est pas installé ou non disponible dans les chemins de recherche.</translation>
+    </message>
+    <message>
+        <source>Loading Bookmark</source>
+        <translation>Charger des marque-pages</translation>
+    </message>
+    <message>
+        <source>Error when loading HTML bookmarks: %1
+</source>
+        <translation>Erreur lors du chargement des marque-pages HTML:%1
+</translation>
     </message>
 </context>
 <context>
@@ -232,7 +258,7 @@ p, li { white-space: pre-wrap; }
     <name>BookmarksToolBar</name>
     <message>
         <source>Bookmark</source>
-        <translation>Marque-page</translation>
+        <translation type="obsolete">Marque-page</translation>
     </message>
     <message>
         <source>Open</source>
@@ -254,6 +280,10 @@ p, li { white-space: pre-wrap; }
         <source>Add Folder...</source>
         <translation>Ajouter un dossier...</translation>
     </message>
+    <message>
+        <source>Bookmarks</source>
+        <translation>Marque-pages</translation>
+    </message>
 </context>
 <context>
     <name>BrowserApplication</name>
@@ -265,11 +295,11 @@ Voulez-vous tout de même quitter?</translation>
     </message>
     <message>
         <source>Restore failed</source>
-        <translation>Echec de la restauration</translation>
+        <translation>Échec de la restauration</translation>
     </message>
     <message>
         <source> (Change: %1 %2)</source>
-        <translation> (Modification : %1 %2)</translation>
+        <translation type="obsolete"> (Modification : %1 %2)</translation>
     </message>
     <message>
         <source>The saved session will not be restored because Arora crashed while trying to restore this session.</source>
@@ -316,7 +346,7 @@ Voulez-vous tout de même quitter?</translation>
     </message>
     <message>
         <source>Private &amp;Browsing...</source>
-        <translation>Navigation en mode privé...</translation>
+        <translation>Navi&amp;gation privée...</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -482,11 +512,11 @@ Voulez-vous tout de même quitter?</translation>
     </message>
     <message>
         <source>Are you sure you want to turn on private browsing?</source>
-        <translation>Êtes-vous sûr de vouloir activer la navigation en mode privé?</translation>
+        <translation>Êtes-vous sûr de vouloir activer la navigation privée?</translation>
     </message>
     <message>
         <source>Are you sure you want to close the window?  There are %1 tabs open</source>
-        <translation>Êtes-vous sûr de vouloir fermer cette fenêtre? Il y a %1 onglets ouverts</translation>
+        <translation>Êtes-vous sûr de vouloir fermer cette fenêtre ? Il y a %1 onglets ouverts</translation>
     </message>
     <message>
         <source>Web Inspector</source>
@@ -495,7 +525,7 @@ Voulez-vous tout de même quitter?</translation>
     <message>
         <source>The web inspector will only work correctly for pages that were loaded after enabling.
 Do you want to reload all pages?</source>
-        <translation>L&apos;inspecteur Web ne fonctionne que pour les pages qui ont été chargées après son activation.  Voulez-vous recharcher toutes les pages?</translation>
+        <translation>L&apos;inspecteur Web ne fonctionne que pour les pages qui ont été chargées après son activation.  Voulez-vous recharcher toutes les pages ?</translation>
     </message>
     <message>
         <source>Stop loading the current page</source>
@@ -511,7 +541,7 @@ Do you want to reload all pages?</source>
     </message>
     <message>
         <source>&amp;Clear Private Data</source>
-        <translation>&amp;Effacer l&apos;information privée</translation>
+        <translation>&amp;Effacer les informations privée</translation>
     </message>
     <message>
         <source>Ctrl+Shift+Delete</source>
@@ -548,7 +578,7 @@ Do you want to reload all pages?</source>
     </message>
     <message>
         <source>Show &amp;Network Monitor</source>
-        <translation>Afficher le &amp;gestionnaire réseau</translation>
+        <translation type="obsolete">Afficher le &amp;gestionnaire réseau</translation>
     </message>
     <message>
         <source>Switch application language </source>
@@ -585,16 +615,28 @@ Do you want to reload all pages?</source>
     <message>
         <source>About &amp;%1</source>
         <comment>About Browser</comment>
-        <translation>À propos d&apos;%1</translation>
+        <translation>À propos d&apos;&amp;%1</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;When private browsing is turned on, some actions concerning your privacy will be disabled:&lt;ul&gt;&lt;li&gt; Webpages are not added to the history.&lt;/li&gt;&lt;li&gt; Items are automatically removed from the Downloads window.&lt;/li&gt;&lt;li&gt; New cookies are not stored, current cookies can&apos;t be accessed.&lt;/li&gt;&lt;li&gt; Site icons won&apos;t be stored, session won&apos;t be saved.&lt;/li&gt;&lt;li&gt; Searches are not added to the pop-up menu in the search box.&lt;/li&gt;&lt;/ul&gt;Until you close the window, you can still click the Back and Forward buttons to return to the webpages you have opened.</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Quand la navigation en mode privée est activée, certaines actions en rapport avec votre vie privée sont désactivées: &lt;ul&gt;&lt;li&gt; Les pages Web ne sont pas ajoutées à l&apos;historique.&lt;/li&gt;&lt;li&gt; Les fichiers sont automatiquements retirés de la fenêtre de téléchargements.&lt;/li&gt;&lt;li&gt; Les nouveaux cookies ne sont pas stockés, les cookies existants ne sont pas accessibles.&lt;/li&gt;&lt;li&gt; Les icônes de sites ne sont pas stockés, les sessions ne sont pas enregistrées.&lt;/li&gt;&lt;li&gt; Les recherches ne sont pas ajoutées au menu déroulant de la boite de recherches.&lt;/li&gt;&lt;li&gt; Jusqu&apos;à ce que la fenêtre soit fermée, il est toujours possible de cliquer sur les bouton « Page précédente » et « Page suivante » pour retourner sur les pages Web visitées.</translation>
+        <translation type="obsolete">&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Quand la navigation en mode privée est activée, certaines actions en rapport avec votre vie privée sont désactivées: &lt;ul&gt;&lt;li&gt; Les pages Web ne sont pas ajoutées à l&apos;historique.&lt;/li&gt;&lt;li&gt; Les fichiers sont automatiquements retirés de la fenêtre de téléchargements.&lt;/li&gt;&lt;li&gt; Les nouveaux cookies ne sont pas stockés, les cookies existants ne sont pas accessibles.&lt;/li&gt;&lt;li&gt; Les icônes de sites ne sont pas stockés, les sessions ne sont pas enregistrées.&lt;/li&gt;&lt;li&gt; Les recherches ne sont pas ajoutées au menu déroulant de la boite de recherches.&lt;/li&gt;&lt;li&gt; Jusqu&apos;à ce que la fenêtre soit fermée, il est toujours possible de cliquer sur les bouton « Page précédente » et « Page suivante » pour retourner sur les pages Web visitées.</translation>
     </message>
     <message>
         <source>Ctrl+Y</source>
         <comment>Download Manager</comment>
-        <translation></translation>
+        <translation>Ctrl+Y</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>Défault</translation>
+    </message>
+    <message>
+        <source>Text Encoding</source>
+        <translation>Encodage des caractères</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;When private browsing is turned on, some actions concerning your privacy will be disabled:&lt;ul&gt;&lt;li&gt; Webpages are not added to the history.&lt;/li&gt;&lt;li&gt; Items are automatically removed from the Downloads window.&lt;/li&gt;&lt;li&gt; New cookies are not stored, current cookies can&apos;t be accessed.&lt;/li&gt;&lt;li&gt; Site icons won&apos;t be stored, session won&apos;t be saved.&lt;/li&gt;&lt;li&gt; Searches are not added to the pop-up menu in the search box.&lt;/li&gt;&lt;li&gt; Network cache is disabled.&lt;/li&gt;&lt;/ul&gt;Until you close the window, you can still click the Back and Forward buttons to return to the webpages you have opened.</source>
+        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Lorsque la navigation privée est activé, certaines actions qui concernent votre vie privée seront désactivés:&lt;ul&gt;&lt;li&gt; Les sites consultés ne seront pas ajoutés à l&apos;historique.&lt;/li&gt;&lt;li&gt; Les téléchargements seront automatiquement supprimés de la fenêtre des téléchargements.&lt;/li&gt;&lt;li&gt; Les nouveaux cookies ne seront pas stockés, les cookies actuels ne peuvent pas être accédés.&lt;/li&gt;&lt;li&gt; Les icônes des sites web ne seront pas stockés, la session ne sera pas sauvegardé.&lt;/li&gt;&lt;li&gt; Les recherches effectuées ne seront pas ajoutés aux recherches récentes.&lt;/li&gt;&lt;li&gt;Le cache sera désactivé.&lt;/li&gt;&lt;/ul&gt;Vous pourrez toujours utiliser les boutons Précédent et Suivant pour naviguer dans les pages que vous avez ouvert, jusqu&apos;à que vous fermiez la fenêtre.</translation>
     </message>
 </context>
 <context>
@@ -612,7 +654,7 @@ Do you want to reload all pages?</source>
     </message>
     <message>
         <source>Clear the following items:</source>
-        <translation>Vider les items suivants:</translation>
+        <translation>Vider les objets suivants:</translation>
     </message>
     <message>
         <source>&amp;Browsing History</source>
@@ -632,11 +674,11 @@ Do you want to reload all pages?</source>
     </message>
     <message>
         <source>Website &amp;Icons</source>
-        <translation>&amp;Icônes de Sites Web</translation>
+        <translation>&amp;Icônes de sites web</translation>
     </message>
     <message>
         <source>Clear &amp;Private Data</source>
-        <translation>Effacer les Informations &amp;Privées</translation>
+        <translation>Effacer les informations &amp;Privées</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -720,7 +762,7 @@ Do you want to reload all pages?</source>
     </message>
     <message>
         <source>Secure</source>
-        <translation>Sécure</translation>
+        <translation>Sécurisé</translation>
     </message>
     <message>
         <source>Expires</source>
@@ -732,11 +774,11 @@ Do you want to reload all pages?</source>
     </message>
     <message>
         <source>true</source>
-        <translation></translation>
+        <translation>vrai</translation>
     </message>
     <message>
         <source>false</source>
-        <translation></translation>
+        <translation>faux</translation>
     </message>
     <message>
         <source>Session cookie</source>
@@ -766,7 +808,7 @@ Do you want to reload all pages?</source>
     <name>CookiesExceptionsDialog</name>
     <message>
         <source>Cookie Exceptions</source>
-        <translation>Exceptions pour les fichiers témoins</translation>
+        <translation>Exceptions pour les cookies</translation>
     </message>
     <message>
         <source>New Exception</source>
@@ -813,7 +855,7 @@ Do you want to reload all pages?</source>
     </message>
     <message>
         <source>0 Items</source>
-        <translation>0 items</translation>
+        <translation>0 téléchargements</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -824,7 +866,7 @@ Do you want to reload all pages?</source>
     <name>DownloadItem</name>
     <message>
         <source>Form</source>
-        <translation>Formulaire</translation>
+        <translation type="obsolete">Formulaire</translation>
     </message>
     <message>
         <source>Ico</source>
@@ -878,6 +920,10 @@ Do you want to reload all pages?</source>
         <source>%1 of %2 (%3/sec) - %4</source>
         <translation>%1 de %2 (%3/sec) - %4</translation>
     </message>
+    <message>
+        <source>Download directory (%1) couldn&apos;t be created.</source>
+        <translation>Le dossier de téléchargement (%1) n&apos;a pas pu être créé.</translation>
+    </message>
 </context>
 <context>
     <name>DownloadManager</name>
@@ -919,6 +965,33 @@ Voulez-vous tout de même quitter?</translation>
     <message>
         <source>MB</source>
         <translation>Mo</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translation>Go</translation>
+    </message>
+</context>
+<context>
+    <name>FileAccessReply</name>
+    <message>
+        <source>No Error</source>
+        <translation>Pas d&apos;erreurs</translation>
+    </message>
+    <message>
+        <source>Error opening: %1: No such file or directory</source>
+        <translation>Erreur lors de l&apos;ouverture de %1: le fichier ou répertoire n&apos;existe pas</translation>
+    </message>
+    <message>
+        <source>Unable to read %1</source>
+        <translation>Impossible de lire %1</translation>
+    </message>
+    <message>
+        <source>Contents of %1</source>
+        <translation>Contenu de %1</translation>
+    </message>
+    <message>
+        <source>%1 KB</source>
+        <translation>%1 ko</translation>
     </message>
 </context>
 <context>
@@ -993,14 +1066,37 @@ Voulez-vous tout de même quitter?</translation>
     </message>
 </context>
 <context>
+    <name>JavaScriptAroraObject</name>
+    <message>
+        <source>Welcome to Arora!</source>
+        <translation>Bienvenue sur Arora!</translation>
+    </message>
+    <message>
+        <source>Arora Start</source>
+        <translation>Démarrage de Arora</translation>
+    </message>
+    <message>
+        <source>Search!</source>
+        <translation>Recherche!</translation>
+    </message>
+    <message>
+        <source>Search results provided by</source>
+        <translation>Résultats de recherche fournis par</translation>
+    </message>
+    <message>
+        <source>About Arora</source>
+        <translation>A propos d&apos;Arora</translation>
+    </message>
+</context>
+<context>
     <name>LanguageManager</name>
     <message>
         <source>Choose language</source>
-        <translation>Choissisez la langue</translation>
+        <translation>Choisissez la langue</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can run with a different language than&lt;br&gt;the operating system default.&lt;/p&gt;&lt;p&gt;Please choose the language which should be used&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Vous pouvez utiliser une langue différent de&lt;br&gt;celle du système d&apos;exploitation par défaut.&lt;/p&gt;&lt;p&gt;Veuillez choisir la langue à utiliser.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Vous pouvez utiliser une langue différente de&lt;br&gt;celle du système d&apos;exploitation par défaut.&lt;/p&gt;&lt;p&gt;Veuillez choisir la langue à utiliser.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>No translation files are installed.</source>
@@ -1011,11 +1107,11 @@ Voulez-vous tout de même quitter?</translation>
     <name>NetworkAccessManager</name>
     <message>
         <source>&lt;qt&gt;Enter username and password for &quot;%1&quot; at %2&lt;/qt&gt;</source>
-        <translation>&lt;qt&gt;Entrer le nombre d&apos;utilisateur et le mot de passe pour &quot;%1&quot; sur %2&lt;/qt&gt;</translation>
+        <translation>&lt;qt&gt;Entrez le nom d&apos;utilisateur et le mot de passe pour &quot;%1&quot; sur %2&lt;/qt&gt;</translation>
     </message>
     <message>
         <source>&lt;qt&gt;Connect to proxy &quot;%1&quot; using:&lt;/qt&gt;</source>
-        <translation>&lt;qt&gt;Se brancher au serveur mandataire &quot;%1&quot; en utilisant:&lt;/qt&gt;</translation>
+        <translation>&lt;qt&gt;Se connecter au serveur mandataire &quot;%1&quot; en utilisant:&lt;/qt&gt;</translation>
     </message>
     <message>
         <source> - SSL Errors</source>
@@ -1033,43 +1129,59 @@ Voulez-vous ignorer ces erreurs?&lt;/qt&gt;</translation>
         <source>&lt;qt&gt;Certificates:&lt;br/&gt;%1&lt;br/&gt;Do you want to accept all these certificates?&lt;/qt&gt;</source>
         <translation>&lt;qt&gt;Certificats: &lt;br/&gt;%1&lt;br/&gt;Voulez-vous accepter ces certificats?&lt;/qt&gt;</translation>
     </message>
+    <message>
+        <source>Issuer: %1</source>
+        <translation>Émetteur: %1</translation>
+    </message>
+    <message>
+        <source>Not valid before: %1</source>
+        <translation>Invalide avant: %1</translation>
+    </message>
+    <message>
+        <source>Valid until: %1</source>
+        <translation>Valide jusqu&apos;à: %1</translation>
+    </message>
+    <message>
+        <source>Alternate Names:</source>
+        <translation>Noms alternatifs:</translation>
+    </message>
 </context>
 <context>
     <name>NetworkMonitor</name>
     <message>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation type="obsolete">Nom</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Valeur</translation>
+        <translation type="obsolete">Valeur</translation>
     </message>
 </context>
 <context>
     <name>NetworkMonitorDialog</name>
     <message>
         <source>Network Monitor</source>
-        <translation>Gestionnaire de réseau</translation>
+        <translation type="obsolete">Gestionnaire de réseau</translation>
     </message>
     <message>
         <source>Network Requests</source>
-        <translation>Requêtes réseaux</translation>
+        <translation type="obsolete">Requêtes réseaux</translation>
     </message>
     <message>
         <source>Request Headers</source>
-        <translation>en-tête de la requête</translation>
+        <translation type="obsolete">en-tête de la requête</translation>
     </message>
     <message>
         <source>Response Headers</source>
-        <translation>en-tête de la réponse</translation>
+        <translation type="obsolete">en-tête de la réponse</translation>
     </message>
     <message>
         <source>&amp;Remove</source>
-        <translation>Supp&amp;rimer</translation>
+        <translation type="obsolete">Supp&amp;rimer</translation>
     </message>
     <message>
         <source>Remove &amp;All Requests</source>
-        <translation>Supprimer &amp;toutes les requêtes</translation>
+        <translation type="obsolete">Supprimer &amp;toutes les requêtes</translation>
     </message>
 </context>
 <context>
@@ -1167,11 +1279,11 @@ Voulez-vous ignorer ces erreurs?&lt;/qt&gt;</translation>
     <name>ProxyDialog</name>
     <message>
         <source>Proxy Authentication</source>
-        <translation>Authentification du Proxy</translation>
+        <translation>Authentification du serveur mandataire</translation>
     </message>
     <message>
         <source>Connect to proxy</source>
-        <translation>Connexion au proxy</translation>
+        <translation>Connexion au serveur mandataire</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -1201,42 +1313,46 @@ Voulez-vous ignorer ces erreurs?&lt;/qt&gt;</translation>
     <name>RequestModel</name>
     <message>
         <source>Redirect: %1</source>
-        <translation>Redirection: %1</translation>
+        <translation type="obsolete">Redirection: %1</translation>
     </message>
     <message>
         <source>Method</source>
-        <translation>Méthode</translation>
+        <translation type="obsolete">Méthode</translation>
     </message>
     <message>
         <source>Address</source>
-        <translation>Adresse</translation>
+        <translation type="obsolete">Adresse</translation>
     </message>
     <message>
         <source>Response</source>
-        <translation>Réponse</translation>
+        <translation type="obsolete">Réponse</translation>
     </message>
     <message>
         <source>Length</source>
-        <translation>Longueur</translation>
+        <translation type="obsolete">Longueur</translation>
     </message>
     <message>
         <source>Content Type</source>
-        <translation>Content Type</translation>
+        <translation type="obsolete">Content Type</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation type="obsolete">Info</translation>
     </message>
 </context>
 <context>
     <name>SearchBanner</name>
     <message>
         <source>Form</source>
-        <translation>Formulaire</translation>
+        <translation type="obsolete">Formulaire</translation>
     </message>
     <message>
         <source>Done</source>
         <translation>Fermer</translation>
+    </message>
+    <message>
+        <source>Highlight All</source>
+        <translation>Surligner tous</translation>
     </message>
 </context>
 <context>
@@ -1270,7 +1386,7 @@ Voulez-vous ignorer ces erreurs?&lt;/qt&gt;</translation>
     </message>
     <message>
         <source>After two weeks</source>
-        <translation>Après 2 semaines</translation>
+        <translation>Après deux semaines</translation>
     </message>
     <message>
         <source>After one month</source>
@@ -1330,7 +1446,7 @@ Voulez-vous ignorer ces erreurs?&lt;/qt&gt;</translation>
     </message>
     <message>
         <source>Accept Cookies:</source>
-        <translation>Accepter les fichiers témoins:</translation>
+        <translation>Accepter les cookies:</translation>
     </message>
     <message>
         <source>Always</source>
@@ -1462,7 +1578,7 @@ Voulez-vous ignorer ces erreurs?&lt;/qt&gt;</translation>
     </message>
     <message>
         <source>Host name:</source>
-        <translation>nom de l&apos;hôte:</translation>
+        <translation>Nom de l&apos;hôte:</translation>
     </message>
     <message>
         <source>Preferred languages for viewing webpages in:</source>
@@ -1528,6 +1644,10 @@ Voulez-vous ignorer ces erreurs?&lt;/qt&gt;</translation>
         <source> MB</source>
         <translation> Mo</translation>
     </message>
+    <message>
+        <source>Use the default search engine as fallback when the URL given by the user is invalid</source>
+        <translation>Utiliser le moteur de recherche par défaut en secours quand l&apos;URL donnée par l&apos;utilisateur est invalide</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -1560,11 +1680,15 @@ Voulez-vous ignorer ces erreurs?&lt;/qt&gt;</translation>
     </message>
     <message>
         <source>&amp;Wrap lines</source>
-        <translation>Retours à la ligne statiques</translation>
+        <translation>Retours à la ligne &amp;statiques</translation>
     </message>
     <message>
         <source>Source of Page </source>
-        <translation>Source de la page</translation>
+        <translation type="obsolete">Source de la page</translation>
+    </message>
+    <message>
+        <source>Source of Page %1</source>
+        <translation>Source de la page %1</translation>
     </message>
 </context>
 <context>
@@ -1575,11 +1699,11 @@ Voulez-vous ignorer ces erreurs?&lt;/qt&gt;</translation>
     </message>
     <message>
         <source>&amp;Close Tab</source>
-        <translation>Fermer l&apos;onglet</translation>
+        <translation>&amp;Fermer l&apos;onglet</translation>
     </message>
     <message>
         <source>Close &amp;Other Tabs</source>
-        <translation>Fermer les autres onglets</translation>
+        <translation>Fermer les &amp;autres onglets</translation>
     </message>
     <message>
         <source>Reload Tab</source>
@@ -1606,7 +1730,7 @@ Voulez-vous ignorer ces erreurs?&lt;/qt&gt;</translation>
     </message>
     <message>
         <source>&amp;Close Tab</source>
-        <translation>Fermer l&apos;onglet</translation>
+        <translation>&amp;Fermer l&apos;onglet</translation>
     </message>
     <message>
         <source>Show Next Tab</source>
@@ -1618,7 +1742,7 @@ Voulez-vous ignorer ces erreurs?&lt;/qt&gt;</translation>
     </message>
     <message>
         <source>Recently Closed Tabs</source>
-        <translation>Onglet récement fermés</translation>
+        <translation>Onglets récemment fermés</translation>
     </message>
     <message>
         <source>Do you really want to close this page?</source>
@@ -1634,11 +1758,11 @@ Voulez-vous vraiment fermer cette page?
     </message>
     <message>
         <source>Ctrl-]</source>
-        <translation></translation>
+        <translation>Ctrl-]</translation>
     </message>
     <message>
         <source>Ctrl-[</source>
-        <translation></translation>
+        <translation>Ctrl-[</translation>
     </message>
     <message>
         <source>Untitled</source>
@@ -1708,7 +1832,7 @@ Voulez-vous vraiment fermer cette page?
     </message>
     <message>
         <source>Check the address for errors such as &lt;b&gt;ww&lt;/b&gt;.arora-browser.org instead of &lt;b&gt;www&lt;/b&gt;.arora-browser.org</source>
-        <translation>Vérifier que vous n&apos;avez pas commis d&apos;erreurs dans l&apos;adresse tel que &lt;b&gt;ww&lt;/b&gt;.arora-browser.org à la place de &lt;b&gt;www&lt;/b&gt;.arora-browser.org</translation>
+        <translation>Vérifiez que vous n&apos;avez pas commis d&apos;erreurs dans l&apos;adresse tel que &lt;b&gt;ww&lt;/b&gt;.arora-browser.org à la place de &lt;b&gt;www&lt;/b&gt;.arora-browser.org</translation>
     </message>
     <message>
         <source>If your computer or network is protected by a firewall or proxy, make sure that the browser is permitted to access the network.</source>
@@ -1716,7 +1840,15 @@ Voulez-vous vraiment fermer cette page?
     </message>
     <message>
         <source>If the address is correct, try checking the network connection.</source>
-        <translation>Si l&apos;adresse est correcte, vérifiez votre connection au réseau.</translation>
+        <translation>Si l&apos;adresse est correcte, vérifiez votre connexion au réseau.</translation>
+    </message>
+    <message>
+        <source>Resending POST request</source>
+        <translation>Renvoi d&apos;une requête POST</translation>
+    </message>
+    <message>
+        <source>In order to display the site, the request along with all the data must be sent once again, which may lead to some unexpected behaviour of the site e.g. the same action might be performed once again. Do you want to continue anyway?</source>
+        <translation>Afin d&apos;afficher le site, la requête ainsi que toutes les données doivent être réenvoyés, ce qui peut conduire à un comportement innatendu du site, par exemple la même action peut être exécuté une nouvelle fois. Continuer quand même ?</translation>
     </message>
 </context>
 <context>
@@ -1768,6 +1900,34 @@ Voulez-vous vraiment fermer cette page?
     <message>
         <source>Search with...</source>
         <translation>Chercher avec...</translation>
+    </message>
+    <message>
+        <source>Add to the toolbar search</source>
+        <translation>Ajouter à la barre de recherche</translation>
+    </message>
+    <message>
+        <source>Method not supported</source>
+        <translation>Méthode non supportée</translation>
+    </message>
+    <message>
+        <source>%1 method is not supported.</source>
+        <translation>La méthode %1 n&apos;est pas supporté.</translation>
+    </message>
+    <message>
+        <source>Search engine</source>
+        <translation>Moteur de recherche</translation>
+    </message>
+    <message>
+        <source>Choose the desired search engine</source>
+        <translation>Choisir le moteur de recherche voulu</translation>
+    </message>
+    <message>
+        <source>Engine name</source>
+        <translation>Nom du moteur</translation>
+    </message>
+    <message>
+        <source>Type in a name for the engine</source>
+        <translation>Insérer un nom pour le moteur</translation>
     </message>
 </context>
 <context>

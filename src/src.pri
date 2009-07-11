@@ -127,7 +127,6 @@ mac {
 include(../webkittrunk.pri)
 
 unix {
-    DATADIR = $$PREFIX/share
     PKGDATADIR = $$DATADIR/arora
     DEFINES += DATADIR=\\\"$$DATADIR\\\" PKGDATADIR=\\\"$$PKGDATADIR\\\"
 }
